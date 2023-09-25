@@ -32,15 +32,14 @@ void insertion_sort(int *array, size_t size, int gap)
 void shell_sort(int *array, size_t size)
 {
     int gap = 1;
-
-    /* Calculate the initial gap using the Knuth sequence */
+    
     while (gap < (int)size / 3)
         gap = gap * 3 + 1;
 
     while (gap > 0) {
         printf("Step with gap %d: ", gap);
-        print_array(array, size); /* Print the array before each pass */
+        print_array(array, size);
         insertion_sort(array, size, gap);
-        gap /= 3; /* Reduce the gap according to the Knuth sequence */
+        gap /= 3;
     }
 }
