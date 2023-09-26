@@ -1,48 +1,50 @@
 #include "sort.h"
 
 /**
- * insertion_sort - Sorts a subarray using insertion sort with a given gap.
- * @array: Pointer to the array.
- * @size: Size of the array.
- * @gap: Gap for comparing elements.
+ * swap - Swaps two integers in an array
+ * @array: The array containing the elements
+ * @a: Index of the first integer to be swapped
+ * @b: Index of the second integer to be swapped
  */
-void insertion_sort(int *array, size_t size, size_t gap)
+void swap(int *array, int a, int b)
 {
-	int temp;
-	size_t j, i;
+	int tmp;
 
-	for (i = gap; i < size; i++)
+	if (array[a] != array[b])
 	{
-		temp = array[i];
-		j = i;
-
-		while (j >= gap && array[j - gap] > temp)
-		{
-			array[j] = array[j - gap];
-			j -= gap;
-		}
-
-		array[j] = temp;
+		tmp = array[a];
+		array[a] = array[b];
+		array[b] = tmp;
 	}
 }
 
 /**
- * shell_sort - Sorts an array of integers in ascending order using Shell sort
- *              with the Knuth sequence.
- * @array: Pointer to the array.
- * @size: Size of the array.
+ * shell_sort - Sorts an array of integers using Shell sort algorithm
+ * @array: The array to be sorted
+ * @size: The size of the array
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t gap = 1;
+	size_t h = 0, i, j;
 
-	while (gap < size / 3)
-		gap = gap * 3 + 1;
-
-	while (gap > 0)
+	if (size < 2)
 	{
+		return;
+	}
+	while (h <= size / 3)
+	{
+		h = h * 3 + 1;
+	}
+	while (h >= 1)
+	{
+		for (i = h; i < size; i++)
+		{
+			for (j = i; j >= h && array[j] < array[j - h]; j -= h)
+			{
+				swap(array, j, j - h);
+			}
+		}
+		h /= 3;
 		print_array(array, size);
-		insertion_sort(array, size, gap);
-		gap /= 3;
 	}
 }
